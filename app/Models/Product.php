@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'description',
-        'product_type_id', 'category_id',
-        'product_group_id', 'status'
+        'name',
+        'slug',
+        'description',
+        'product_type_id',
+        'category_id',
+        'product_group_id',
+        'status'
     ];
 
     public function type()
