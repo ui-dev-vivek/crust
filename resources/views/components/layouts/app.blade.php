@@ -69,6 +69,7 @@
     <link rel="stylesheet" href="{{asset('assets/theam/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/theam/css/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('assets/theam/css/nice-select.css')}}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" id="suha-style.css">
     <!-- Web App Manifest -->
@@ -84,8 +85,8 @@
         </div>
     </div>
 
-   @livewire('utility.navbar')
-    <!-- PWA Install Alert -->
+   @livewire('utility.navbar',['type' => $navbarType])
+
     <div class="bg-white shadow toast pwa-install-alert" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" data-bs-autohide="true">
         <div class="toast-body">
             <div class="mb-2 content d-flex align-items-center"><img src="assets/img/icons/icon-72x72.png" alt="">
@@ -98,16 +99,19 @@
         {{ $slot }}
     </div>
     <!-- Internet Connection Status-->
-    <div class="internet-connection-status" id="internetStatus"></div>
+    <div class="mb-4 internet-connection-status" id="internetStatus"></div>
+    <a href=""><div class="internet-connection-status bg-success" id="cartstatus">3 items in cart &nbsp;&nbsp;<i class='bx bx-arrow-back bx-flip-horizontal bx-flashing' ></i></div></a>
     <!-- Footer Nav-->
     <div class="footer-nav-area" id="footerNav">
         <div class="suha-footer-nav">
+            {{-- max 6 --}}
             <ul class="h-100 d-flex align-items-center justify-content-between ps-0 rtl-flex-d-row-r">
-                <li><a href="home.html"><i class="fa-solid fa-house"></i>Home</a></li>
-                <li><a href="message.html"><i class="fa-solid fa-comment-dots"></i>Chat</a></li>
-                <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i>Basket</a></li>
-                <li><a href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a></li>
-                <li><a href="pages.html"><i class="fa-solid fa-heart"></i>Pages</a></li>
+                <li><a href="/"><i class="fa-solid fa-house"></i>Home</a></li>
+                <li><a href=""><i class="fa-solid fa-bag-shopping"></i>Cart</a></li>
+                <li><a href=""><i class="fa-solid fa-chart-line"></i>Trend</a></li>
+
+                <li><a href=""><i class="fa-solid fa-comment-dots"></i>Support</a></li>
+
             </ul>
         </div>
     </div>
@@ -130,3 +134,4 @@
 </body>
 
 </html>
+
