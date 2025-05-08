@@ -2,7 +2,7 @@
 
 use App\Livewire\Pages\Auth\Login;
 use Illuminate\Support\Facades\Route;
-
+// dd(phpinfo());
 Route::get('/', function () {
     return view('welcome');
 });
