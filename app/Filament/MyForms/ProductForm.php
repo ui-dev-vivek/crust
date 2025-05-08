@@ -65,9 +65,20 @@ class ProductForm
                                     ->relationship('images')
                                     ->helperText('Upload your product main image. more then one image can be uploaded.')
                                     ->schema(ProductImageForm::getProductImageForm())
-                                    ->columns(2)
+                                    ->columns(3)
                                     ->minItems(1)
                                     ->maxItems(5),
+                            ])->columnSpan(2),
+                        Forms\Components\Section::make('Product Variants')
+                            ->collapsible()
+                            ->description('Add your product variants.')
+                            ->schema([
+                                Forms\Components\Repeater::make('variants')
+                                    ->label('')
+                                    ->relationship('variants')
+                                    ->schema(ProductVariantForm::getProductVariantForm())
+                                    ->columns(3)
+                                    ->minItems(1)
                             ])->columnSpan(2),
                     ])
                     ->columns(2)
