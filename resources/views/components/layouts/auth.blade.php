@@ -72,6 +72,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" id="suha-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Web App Manifest -->
     <!-- <link rel="manifest" href="manifest.json"> -->
     @livewireStyles
@@ -87,7 +88,28 @@
 
         {{ $slot }}
 
+        <script>
+            window.addEventListener('tost', event => {
+                const { icon, title } = event.detail;
 
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                Toast.fire({
+                    icon: icon || "success",
+                    title: title || "Done!"
+                });
+            });
+        </script>
     <!-- All JavaScript Files-->
     @livewireScripts
     <script src="{{asset('assets/theam/js/bootstrap.bundle.min.js')}}"></script>

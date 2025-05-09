@@ -1,55 +1,37 @@
-/* -----------------------------------------
-[Master Stylesheet]
-
-Template Name: Suha - Multipurpose Ecommerce Mobile HTML Template
-Template Author: Designing World
-Template Author URL: https://themeforest.net/user/designing-world
-Version: 3.0.0
-Last Updated: Jun 9, 2022
-Created: December 15, 2019
-
-[Table of Contents]
-    * Google Fonts
-    * Include Third Party CSS Library
-        + Bootstrap CSS
-        + Animate CSS
-        + Owl Carousel CSS
-        + Font Awesome CSS
-    * Template Mixins
-        + Miscellaneous
-    * Template Variables
-    * Template Responsive
-    * Main Styles
-        + Reboot CSS
-        + Shortcode CSS
-        + Preloader CSS
-        + Animation CSS
-        + Demo CSS
-        + Header CSS
-        + Hero CSS
-        + Home CSS
-        + Footer CSS
-        + CTA CSS
-        + Register CSS
-        + Contact CSS
-        + Dark Mode CSS
-
-# [font-family]
-'Hind Siliguri', sans-serif;
------------------------------------------ */
-/* Reboot CSS */
 
 
 :root {
-  --theme-color: #6b1240;
+  --theme-color: #D44EAB;
   /*--theme-color: #413501*/
    /* --theme-color: #88603c; */
-
+    --theam-btn-color: #9E2088;
   --font-color: #747794;
   --background-color: #E9EEFF;
 }
 
+.btn-theam {
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 500;
+  color: #dedfe2 !important;
+  text-transform: capitalize;
+            background: var(--theam-btn-color)!important;
+}
 
+.btn-theam:hover, .btn-theam:focus {
+  color: #dedfe2 !important;
+  background: var(--theme-color)!important;
+}
+a{
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 500;
+
+  text-transform: capitalize;
+  color: #000000 !important;
+/* color: var(--theam--color)!important; */
+}
+a:hover, a:focus {
+  color: var(--theme-btn-color)!important;
+}
 
 * {
   margin: 0;
@@ -1337,10 +1319,10 @@ textarea:invalid {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: var(--theme-color);
+  /* background: var(--theme-color);
   background: -o-linear-gradient(right, var(--theme-color), var(--theme-color));
   background: -webkit-gradient(linear, right top, left top, from(var(--theme-color)), to(var(--theme-color)));
-  background: linear-gradient(to left, var(--theme-color), var(--theme-color));
+  background: linear-gradient(to left, var(--theme-color), var(--theme-color)); */
   z-index: 10;
   overflow-y: auto;
   padding-top: 2rem;
@@ -1348,7 +1330,7 @@ textarea:invalid {
   overflow-x: hidden;
 }
 .login-wrapper .success-check {
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 0 auto;
 }
 .login-wrapper .success-check i {
@@ -1364,7 +1346,7 @@ textarea:invalid {
   z-index: 1;
 }
 .register-form span {
-  color: #ffffff;
+  /* color: #ffffff; */
   font-size: 14px;
   display: block;
 }
@@ -1376,13 +1358,13 @@ textarea:invalid {
   left: 0;
   font-size: 16px;
   margin-bottom: 0;
-  color: #ffffff;
+  /* color: #ffffff; */
   top: 28px;
 }
 .register-form .form-control {
   border-radius: 0;
   border: 0;
-  color: #ffffff;
+  /* color: #ffffff; */
   font-size: 13px;
   background-color: transparent;
   height: 40px;
@@ -1390,23 +1372,23 @@ textarea:invalid {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 .register-form .form-control::-webkit-input-placeholder {
-  color: #ffffff;
+  /* color: #ffffff; */
   opacity: 0.5;
 }
 .register-form .form-control::-moz-placeholder {
-  color: #ffffff;
+  /* color: #ffffff; */
   opacity: 0.5;
 }
 .register-form .form-control:-ms-input-placeholder {
-  color: #ffffff;
+  /* color: #ffffff; */
   opacity: 0.5;
 }
 .register-form .form-control::-ms-input-placeholder {
-  color: #ffffff;
+  /* color: #ffffff; */
   opacity: 0.5;
 }
 .register-form .form-control::placeholder {
-  color: #ffffff;
+  /* color: #ffffff; */
   opacity: 0.5;
 }
 .register-form .progress {
@@ -1419,7 +1401,7 @@ textarea:invalid {
 .register-form .password-score {
   font-size: 14px;
   font-weight: 600;
-  color: #ffffff;
+  /* color: #ffffff; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1431,11 +1413,11 @@ textarea:invalid {
 .register-form .password-recommendation ul {
   padding-left: 0;
   font-size: 14px;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 .register-form #password-recommendation-heading {
   font-weight: 600;
-  color: #ffffff;
+  /* color: #ffffff; */
   font-size: 16px;
 }
 
@@ -1443,7 +1425,7 @@ textarea:invalid {
   -webkit-transition-duration: 500ms;
        -o-transition-duration: 500ms;
           transition-duration: 500ms;
-  color: #ffffff;
+  /* color: #ffffff; */
   opacity: 0.75;
   text-transform: capitalize;
   font-size: 14px;
@@ -5598,5 +5580,23 @@ div .login-wrapper .container .row .col-lg-8 img{
     text-decoration:none !important;
     letter-spacing:0.2px;
     color:#fcfdec !important;
+   }
+
+/* Text dark */
+.login-wrapper h6.text-dark{
+    text-align:left;
+    position:relative;
+    top:15px;
+   }
+
+   /* Image */
+   .login-wrapper img{
+    margin-bottom:44px;
+   }
+
+   /* Image */
+   div div .login-wrapper .container .row .col-lg-8 img{
+    width:100px !important;
+    height:100px !important;
    }
 

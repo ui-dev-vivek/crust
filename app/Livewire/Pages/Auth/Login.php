@@ -5,34 +5,35 @@ namespace App\Livewire\Pages\Auth;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Login extends Component
 {
     public $phone;
-
+    public $showName = false;
     public $password;
-
-    public $loading = false;
 
     public $otp;
 
-    public $showOtp = false;
+    public $name;
+
+    public $loading = false;
 
     public $otpSent = false;
 
+    public $showOtp = true;
+
     protected $rules = [
-        'phone' => 'required|digits_between:10,15|exists:users,phone',
+        'phone' => 'required|digits_between:10,15',
         'password' => 'required|min:6',
     ];
 
     protected $messages = [
         'phone.required' => 'Phone number is required',
         'phone.digits_between' => 'Phone number must be between 10 and 15 digits',
-        'phone.exists' => 'Phone number does not exist in our records',
         'password.required' => 'Password is required',
         'password.min' => 'Password must be at least 6 characters',
-
     ];
 
     public function mount()
@@ -42,37 +43,56 @@ class Login extends Component
         }
     }
 
-    public function toggleLoginMethod()
+    public function render()
     {
-        $this->reset(['password', 'otp', 'otpSent']);
-        $this->showOtp = ! $this->showOtp;
+        return view('livewire.pages.auth.login', [
+            'metaData' => [
+                'title' => 'Login',
+                'description' => 'Login to your account',
+                'keywords' => 'login, account, authentication',
+            ],
+        ])->layout('components.layouts.auth');
+    }
+
+    public function updated($property)
+    {
+        $this->validateOnly($property);
     }
 
     public function sendOtp()
     {
         $this->validate([
-            'phone' => 'required|digits_between:10,15|exists:users,phone',
+            'phone' => 'required|digits_between:10,15',
+        ]);
+        sleep(1);
+        if (cache()->has('otp_request_' . $this->phone)) {
+            return $this->addError('otp', 'Please wait before requesting another OTP.');
+        }
+        cache()->put('otp_request_' . $this->phone, true, now()->addSeconds(30));
+        $user = User::firstOrCreate(
+            ['phone' => $this->phone],
+            ['password' => bcrypt($random = Str::random(8))]
+        );
+
+        if ($user->wasRecentlyCreated) {
+            session()->flash('message', 'OTP sent successfully, on '.$this->phone);
+        }
+
+        $otp = random_int(100000, 999999);
+        logger("OTP for {$this->phone}: {$otp}");
+
+        $user->update([
+            'otp' => $otp,
+            'otp_expires_at' => now()->addMinutes(5),
         ]);
 
-        $user = User::where('phone', $this->phone)->first();
-
-        $generatedOtp = rand(100000, 999999); // Or use a service to send actual OTP
-
-        $user->otp = $generatedOtp;
-        $user->otp_expires_at = Carbon::now()->addMinutes(5);
-        $user->save();
-
-        // Simulate sending OTP (you can integrate SMS API here)
-        // e.g., SmsService::send($this->phone, "Your OTP is: $generatedOtp");
-
         $this->otpSent = true;
-
-        session()->flash('message', 'OTP sent successfully.');
+        session()->flash('message', 'OTP sent successfully, on +91 '.$this->phone);
     }
+
 
     public function verifyOtp()
     {
-
         $this->validate([
             'phone' => 'required|digits_between:10,15',
             'otp' => 'required|digits:6',
@@ -80,76 +100,56 @@ class Login extends Component
 
         $user = User::where('phone', $this->phone)->first();
 
-        if (!$user) {
-            $this->addError('phone', 'Phone number not found.');
-            return;
+        if (! $user) {
+            return $this->addError('phone', 'Phone number not found.');
         }
 
         if ($user->otp != $this->otp) {
-            $this->addError('otp', 'Invalid OTP.');
-            return;
+            return $this->addError('otp', 'Invalid OTP.');
         }
 
         if (Carbon::parse($user->otp_expires_at)->isPast()) {
-            $this->addError('otp', 'OTP expired.');
+            return $this->addError('otp', 'OTP expired.');
+        }
+
+        $user->update([
+            'otp' => null,
+            'otp_expires_at' => null,
+        ]);
+
+        if (empty($user->name)) {
+            sleep(2);
+            session()->flash('message', 'Enter your name and get 20% off on your first order');
+            $this->showName = true;
             return;
         }
 
-        // Optional: Mark phone as verified
-        // $user->is_phone_verified = true;
-        $user->otp = null; // Clear OTP
-        $user->otp_expires_at = null;
-        $user->save();
-
         Auth::login($user);
+        session()->flash('message', 'Logged in successfully');
         return redirect()->intended('/dashboard');
     }
 
 
-
-    public function updated($propertyName)
+    public function submitName()
     {
-        $this->validateOnly($propertyName);
-    }
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|digits_between:10,15',
+        ]);
 
-    public function login()
-    {
-        $this->validate();
-        $this->loading = true;
+        $user = User::where('phone', $this->phone)->first();
+        $user->update(['name' => $this->name]);
 
-        if (Auth::attempt(['phone' => $this->phone, 'password' => $this->password])) {
-            return redirect()->intended('/dashboard');
-        } else {
-            $this->addError('phone', 'Invalid phone number or password');
-        }
+        Auth::login($user);
+        session()->flash('message', 'Welcome, '.$user->name);
 
-        $this->loading = false;
-    }
-
-    public function render()
-    {
-        $metaData = [
-            'title' => 'Login',
-            'description' => 'Login to your account',
-            'keywords' => 'login, account, authentication',
-
-        ];
-
-        return view('livewire.pages.auth.login')->layout('components.layouts.auth');
-
+        return redirect()->intended('/dashboard');
     }
 
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('login');
-    }
-    public function redirectToRegister()
-    {
-        // return redirect()->route('register');
-    }
-    public function redirectToForgotPassword()
-    {
-        // return redirect()->route('forgot-password');
     }
 }
