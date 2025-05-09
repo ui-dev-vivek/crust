@@ -101,7 +101,7 @@ class Login extends Component
         $user = User::where('phone', $this->phone)->first();
 
         if (! $user) {
-            return $this->addError('phone', 'Phone number not found.');
+            return $this->addError('otp', 'Phone number not found.');
         }
 
         if ($user->otp != $this->otp) {
@@ -118,7 +118,7 @@ class Login extends Component
         ]);
 
         if (empty($user->name)) {
-            sleep(2);
+            sleep(1);
             session()->flash('message', 'Enter your name and get 20% off on your first order');
             $this->showName = true;
             return;
