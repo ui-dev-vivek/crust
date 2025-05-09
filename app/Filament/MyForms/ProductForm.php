@@ -2,9 +2,9 @@
 
 namespace App\Filament\MyForms;
 
+use App\Models\Product;
 use Filament\Forms;
 use Illuminate\Support\Str;
-use App\Models\Product;
 
 class ProductForm
 {
@@ -52,12 +52,13 @@ class ProductForm
                                         'redo',
                                         'strike',
                                         'underline',
-                                        'undo'
+                                        'undo',
                                     ])
                                     ->columnSpan('full'),
                             ]),
                         Forms\Components\Section::make('Product Images')
                             ->collapsible()
+                            ->collapsed(true)
                             ->description('Upload your product main image. more then one image can be uploaded.')
                             ->schema([
                                 Forms\Components\Repeater::make('images')
@@ -71,19 +72,52 @@ class ProductForm
                             ])->columnSpan(2),
                         Forms\Components\Section::make('Product Variants')
                             ->collapsible()
+                            ->collapsed(true)
                             ->description('Add your product variants.')
                             ->schema([
                                 Forms\Components\Repeater::make('variants')
                                     ->label('')
                                     ->relationship('variants')
                                     ->schema(ProductVariantForm::getProductVariantForm())
+                                    ->addActionLabel('Add Variant')
                                     ->columns(3)
-                                    ->minItems(1)
+                                    ->minItems(1),
                             ])->columnSpan(2),
+                        Forms\Components\Section::make('Product SEO')
+                            ->collapsible()
+                            ->relationship('seo')
+                            ->collapsed(true)
+                            ->description('Add your product SEO information.')
+                            ->schema(ProductSeoForm::getProductSeoForm())->columnSpan(2),
+                            Forms\Components\Repeater::make('related_products_id')
+                            ->label('Related Products')
+                            ->relationship('related')
+                            ->schema([
+                                Forms\Components\Select::make('related_product_id')
+                                    ->label('Related Product')
+                                    ->searchable()
+                                    ->options(function () {
+                                        return Product::pluck('name', 'id'); // Or 'name', based on your column
+                                    })
+                                    ->preload()
+                                    ->reactive()
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('position')
+                                    ->label('Position')
+                                    ->default(0)
+                                    ->numeric()
+                                    ->required(),
+                            ])
+                            ->minItems(1)
+                            ->addActionLabel('Add Related Product')
+                            ->columns(2)
+                            ->reorderable()
+                            ->collapsible()
+                            ->columnSpanFull()
                     ])
                     ->columns(2)
                     ->columnSpan(['lg' => 8, 'xl' => 9, 'sm' => 6, 'md' => 6]),
-
 
                 Forms\Components\Group::make()
                     ->schema([

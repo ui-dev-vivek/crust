@@ -22,13 +22,17 @@ class CrustPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+
         return $panel
             ->default()
             ->id('crust')
             ->path('crust')
             ->login()
+            ->profile()
+            // ->('Crust')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#9E2088'),
+                'secondary' =>Color::hex('#9E2088'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -37,8 +41,7 @@ class CrustPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductSeo extends Model
 {
+    protected $table = 'product_seo';
     protected $fillable = [
         'product_id', 'meta_title', 'meta_description', 'meta_keywords'
     ];

@@ -11,7 +11,7 @@ use Filament\Panel;
 use Filament\Models\Contracts\HasName;
 
 
-class User extends Authenticatable implements FilamentUser, HasName
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -86,10 +86,7 @@ class User extends Authenticatable implements FilamentUser, HasName
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return true; # str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        return str_ends_with($this->email, '@crust.com') && $this->hasVerifiedEmail();
     }
-    public function getFilamentName(): string
-    {
-        return optional($this->profile)->name ?? 'Unnamed User';
-    }
+
 }
