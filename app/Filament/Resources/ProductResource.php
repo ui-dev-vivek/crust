@@ -28,10 +28,14 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\ImageEntry;
+use App\Filament\Clusters\Settings;
+
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
+
+    // protected static ?string $cluster = Settings::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
