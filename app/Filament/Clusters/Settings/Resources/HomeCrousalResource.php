@@ -18,7 +18,11 @@ class HomeCrousalResource extends Resource
 {
     protected static ?string $model = HomeCrousal::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static ?string $label = 'Home Crousal';
+    protected static ?string $navigationLabel = 'Crousals at Top of Home';
+    protected static ?string $navigationGroup = 'Design';
+    protected static ?int $navigationSort = 0;
 
     protected static ?string $cluster = Settings::class;
 

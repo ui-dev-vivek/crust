@@ -21,7 +21,10 @@ class HomePopupResource extends Resource
 {
     protected static ?string $model = HomePopup::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
+    protected static ?string $navigationLabel = 'Popup at Home';
+    protected static ?string $navigationGroup = 'Design';
+    protected static ?int $navigationSort = 0;
 
     protected static ?string $cluster = Settings::class;
 
@@ -31,12 +34,14 @@ class HomePopupResource extends Resource
         return $form
 
             ->schema([
+
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('short_description')
                     ->columnSpanFull()
+                    ->label('Short Description')
                     ->maxLength(65535),
                 Forms\Components\TextInput::make('btn_lable')
                 ->label('Button Label')

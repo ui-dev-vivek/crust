@@ -24,35 +24,46 @@ class OfferBannerResource extends Resource
     protected static ?string $model = OfferBanner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Banners';
+    protected static ?string $navigationGroup = 'Design';
+    protected static ?int $navigationSort = 0;
 
     protected static ?string $cluster = Settings::class;
 
     public static function form(Form $form): Form
     {
         return $form
+        ->schema([
+            Forms\Components\Grid::make([
+                'default' => 12,
+                'md' => 12,
+            ])
             ->schema([
-                Forms\Components\TextInput::make('title')
+                Forms\Components\Group::make([
+                    Forms\Components\TextInput::make('title')
+                    ->placeholder('20% OFF on Red Rose candles')
+                    ->helperText('Title of the offer to be shown on the offer banner.')
                     ->required()
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('link_url')
+                    ->label('Banner URL')
+                    ->placeholder('www.mavafashion.com')
+                    ->helperText('URL to which the offer banner will redirect the user.')
                     ->maxLength(255)
+                    ->url()
+                    ->required()
                     ->default(null),
-                Forms\Components\Select::make('category')
-                    ->relationship('category', 'name')
-                    ->helperText('Category to which the offer banner belongs.')
-                    ->label('Category')
-
-                    ->default(null),
-                    Forms\Components\Select::make('group')
-                    ->label('Product Group')
-                    ->relationship('group', 'name')
-                    ->helperText('Product group to which the offer banner belongs.')
-
-                    ->default(null),
-                Forms\Components\TextInput::make('placement')
+                    Forms\Components\TextInput::make('placement')
+                    ->placeholder('Homepage')
+                    ->helperText('Placement of the offer banner. where it will be shown.')
+                    ->label('Placement')
                     ->required()
                     ->maxLength(255),
+
+                ])->columnSpan(8),
+                Forms\Components\Group::make([
+
                     Forms\Components\Toggle::make('status')
                     ->helperText('Active or Inactive.')
                     ->label('Active')
@@ -64,17 +75,32 @@ class OfferBannerResource extends Resource
                     ->required()
                     ->columnSpanFull()
                     ->default(true),
+                    Forms\Components\Select::make('category')
+                    ->relationship('category', 'name')
+                    ->helperText('Category to which the offer banner belongs.')
+                    ->label('Category')
+
+                    ->default(null),
+                    Forms\Components\Select::make('group')
+                    ->label('Product Group')
+                    ->relationship('group', 'name')
+                    ->helperText('Product group to which the offer banner belongs.')
+
+                    ->default(null),
+
+                ])->columnSpan(4),
                 Forms\Components\FileUpload::make('image_url')
-                    ->image()
-                    ->label('Image')
-                    ->imageEditor()
-                    ->directory('offer-banners')
-                    ->preserveFilenames()
-                    ->visibility('public')
-                    ->helperText('Image for the offer banner.')
-                    ->required()
-                    ->columnSpanFull(),
-            ]);
+                ->image()
+                ->label('Image')
+                ->imageEditor()
+                ->directory('offer-banners')
+                ->preserveFilenames()
+                ->visibility('public')
+                ->helperText('Image for the offer banner.')
+                ->required()
+                ->columnSpanFull(),
+
+                ]), ]);
     }
 
     public static function table(Table $table): Table
