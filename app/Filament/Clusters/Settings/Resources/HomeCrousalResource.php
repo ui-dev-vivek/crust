@@ -31,21 +31,42 @@ class HomeCrousalResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->required()
+                    ->label('Heading Text')
+                    ->helperText('This will be shown at the top of the Banner.')
+                    ->required()->columnSpanFull()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->required(),
+
                 Forms\Components\TextInput::make('btn_lable')
                     ->maxLength(255)
+                    ->label('Button Text')
+                    ->helperText('This will be shown on the Button.')
                     ->default(null),
                 Forms\Components\TextInput::make('btn_url')
                     ->maxLength(255)
+                    ->label('Button URL')
+                    ->helperText('This will be the URL of the Button.')
                     ->default(null),
-                Forms\Components\TextInput::make('status')
+
+                    Forms\Components\Toggle::make('status')
+                    ->helperText('Active or Inactive.')
+                    ->label('Active')
+                    ->onIcon('heroicon-m-check-circle')
+                    ->offIcon('heroicon-m-x-circle')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->default(true)
+                    ->required(),
+                    Forms\Components\FileUpload::make('image')
+                    ->label('Banner Background Image')
+                    ->directory('home-crousal')
+                    ->image()
                     ->required()
-                    ->numeric()
-                    ->default(1),
+                    ->imageEditor()
+                    ->imageEditorMode(2)
+                    ->imageResizeMode('cover')
+                    ->columnSpanFull()
+                    ->imageCropAspectRatio('1920:600'),
+
             ]);
     }
 
