@@ -27,12 +27,22 @@ class CrustPanelProvider extends PanelProvider
             ->default()
             ->id('crust')
             ->path('crust')
+            ->font('Poppins')
+
+            ->brandName('Prarang')
+            // ->brandLogo(asset('crust-app/logo/crust-light.png'))
+            // ->favicon(asset('crust-app/logo/crust-dark.png'))
+            // ->brandLogoHeight('4rem')
+
             ->login()
             ->profile()
-            // ->('Crust')
+
+            ->spa()
+            ->unsavedChangesAlerts()
+
             ->colors([
                 'primary' => Color::hex('#9E2088'),
-                'secondary' =>Color::hex('#9E2088'),
+                'secondary' => Color::hex('#9E2088'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
@@ -41,9 +51,7 @@ class CrustPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
