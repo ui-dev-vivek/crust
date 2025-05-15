@@ -68,6 +68,7 @@ class ProductVariantForm
                 ->schema([
                     Forms\Components\FileUpload::make('image_url')
                         ->label('Image')
+
                         ->image()
                         ->required()
                 ])
