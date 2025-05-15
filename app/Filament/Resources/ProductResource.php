@@ -75,7 +75,7 @@ class ProductResource extends Resource
                 Tables\Filters\SelectFilter::make('category_id')
                     ->relationship('category', 'name')
                     ->searchable(),
-                    Tables\Filters\SelectFilter::make('Group')
+                Tables\Filters\SelectFilter::make('Group')
                     ->relationship('group', 'name')
                     ->searchable(),
 

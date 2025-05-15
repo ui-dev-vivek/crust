@@ -89,7 +89,7 @@ class ProductForm
                             ->collapsed(true)
                             ->description('Add your product SEO information.')
                             ->schema(ProductSeoForm::getProductSeoForm())->columnSpan(2),
-                            Forms\Components\Repeater::make('related_products_id')
+                        Forms\Components\Repeater::make('related_products_id')
                             ->label('Related Products')
                             ->relationship('related')
                             ->schema([
@@ -100,16 +100,14 @@ class ProductForm
                                         return Product::pluck('name', 'id'); // Or 'name', based on your column
                                     })
                                     ->preload()
-                                    ->reactive()
-                                    ->required(),
+                                    ->reactive(),
 
                                 Forms\Components\TextInput::make('position')
                                     ->label('Position')
                                     ->default(0)
-                                    ->numeric()
-                                    ->required(),
+                                    ->numeric(),
                             ])
-                            ->minItems(1)
+                            // ->minItems(1)
                             ->addActionLabel('Add Related Product')
                             ->columns(2)
                             ->reorderable()
