@@ -3,12 +3,10 @@
 use App\Livewire\Pages\Auth\Login;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-// dd(phpinfo());
-Route::get('/', function () {
-    return view('welcome');
-});
 
+use App\Livewire\Pages\Main\Home;
 
+Route::get('/',Home::class)->name('home');
 
 // Auth Routes
 Route::get('/login',Login::class)->name('login');

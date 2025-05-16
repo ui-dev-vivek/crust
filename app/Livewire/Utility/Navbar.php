@@ -7,7 +7,7 @@ use Livewire\Component;
 class Navbar extends Component
 {
     public $type;
-    public function mount($type = 'cd')
+    public function mount($type = 'home')
     {
         $this->type = $type;
     }

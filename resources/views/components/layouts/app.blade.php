@@ -85,7 +85,7 @@
         </div>
     </div>
 
-   @livewire('utility.navbar',['type' => $navbarType])
+   @livewire('utility.navbar',['type' => $navbarType?? 'home'])
 
     <div class="bg-white shadow toast pwa-install-alert" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" data-bs-autohide="true">
         <div class="toast-body">

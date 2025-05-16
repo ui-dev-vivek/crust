@@ -23,12 +23,14 @@
         welcomeSlider.owlCarousel({
             items: 1,
             loop: true,
-            autoplay: false,
+            autoplay: true,
             dots: true,
             center: true,
             margin: 0,
             animateIn: 'fadeIn',
-            animateOut: 'fadeOut'
+            animateOut: 'fadeOut',
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
         })
 
         welcomeSlider.on('translate.owl.carousel', function () {
@@ -163,7 +165,7 @@
         });
     }
 
-    // :: Nice Select 
+    // :: Nice Select
     if ($.fn.niceSelect) {
         $('#selectProductCatagory, #topicSelect, #countryCodeSelect').niceSelect();
     }
@@ -180,21 +182,21 @@
         });
     }
 
-    // :: Magnific Popup 
+    // :: Magnific Popup
     if ($.fn.magnificPopup) {
         $('#singleProductVideoBtn, #videoButton').magnificPopup({
             type: "iframe"
         });
     }
 
-    // :: Review Image Magnific Popup 
+    // :: Review Image Magnific Popup
     if ($.fn.magnificPopup) {
         $('.review-image').magnificPopup({
             type: "image"
         });
     }
 
-    // :: Cart Quantity Button Handler 
+    // :: Cart Quantity Button Handler
     $(".quantity-button-handler").on("click", function () {
         var value = $(this).parent().find("input.cart-quantity-input").val();
         if ($(this).text() == "+") {
@@ -209,7 +211,7 @@
         $(this).parent().find("input").val(newVal);
     });
 
-    // :: Data Countdown 
+    // :: Data Countdown
     $('[data-countdown]').each(function () {
         var $this = $(this),
             finalDate = $(this).data('countdown');
@@ -221,20 +223,20 @@
         });
     });
 
-    // :: Tooltip 
+    // :: Tooltip
     var tooltipSuha = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipSuha.map(function (tooltip) {
         return new bootstrap.Tooltip(tooltip);
     });
 
-    // :: Toast 
+    // :: Toast
     var toastSuha = [].slice.call(document.querySelectorAll('.toast'));
     var toastList = toastSuha.map(function (toast) {
         return new bootstrap.Toast(toast);
     });
     toastList.forEach(toast => toast.show());
 
-    // :: Home Page Toast 
+    // :: Home Page Toast
     var toastSuha = [].slice.call(document.querySelectorAll('.toast'));
     var toastList = toastSuha.map(function (toast) {
         return new bootstrap.Toast(toast);
