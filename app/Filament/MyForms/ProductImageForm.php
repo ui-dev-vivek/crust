@@ -19,7 +19,7 @@ class ProductImageForm
                 ->imageEditorMode(2)
                 ->imageResizeMode('cover')
                 // ->imageResizeMode('cover')
-                // ->imageCropAspectRatio('16:9')
+                ->imageCropAspectRatio('4:5')
                 ->directory('products')
                 ->visibility('private')
                 ->previewable(true)

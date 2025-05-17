@@ -5600,3 +5600,21 @@ div .login-wrapper .container .row .col-lg-8 img{
     height:100px !important;
    }
 
+
+ /* Flex */
+ .product-catagories-wrapper .flex-column .d-flex{
+    padding-left:3px !important;
+    padding-right:3px !important;
+    padding-top:3px !important;
+    padding-bottom:3px !important;
+    width:70px;
+    height:70px;
+   }
+
+   /* Image */
+   .product-catagories-wrapper a img{
+    border-top-left-radius:50%;
+    border-top-right-radius:50%;
+    border-bottom-left-radius:50%;
+    border-bottom-right-radius:50%;
+   }

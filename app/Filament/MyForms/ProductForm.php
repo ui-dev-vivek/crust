@@ -18,6 +18,9 @@ class ProductForm
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->required()
+                                    ->label('Title of Product')
+                                    ->helperText('This will be the title of your product.')
+                                    ->placeholder('Soft rose Pillar Candle | Soft Rose | Pack of 2')
                                     ->maxLength(255)
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
@@ -27,13 +30,14 @@ class ProductForm
                                         $set('slug', Str::slug($state));
                                     }),
                                 Forms\Components\TextInput::make('slug')
+                                    ->label('Slug')
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(Product::class, 'slug', ignoreRecord: true),
 
-                                Forms\Components\MarkdownEditor::make('description')
+                                Forms\Components\RichEditor::make('description')
                                     ->required()
                                     ->fileAttachmentsDirectory('attachments')
                                     ->fileAttachmentsVisibility('private')

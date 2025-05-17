@@ -64,7 +64,7 @@
     if ($.fn.owlCarousel) {
         var flashSlide = $('.flash-sale-slide');
         flashSlide.owlCarousel({
-            items: 3,
+            items: 2,
             margin: 8,
             loop: true,
             autoplay: true,
@@ -73,7 +73,7 @@
             nav: false,
             responsive: {
                 992: {
-                    items: 4
+                    items: 3
                 }
             },
         })
