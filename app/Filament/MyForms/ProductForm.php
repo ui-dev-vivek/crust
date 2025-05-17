@@ -5,7 +5,7 @@ namespace App\Filament\MyForms;
 use App\Models\Product;
 use Filament\Forms;
 use Illuminate\Support\Str;
-use AskerAkbar\GptTrixEditor\Components\GptTrixEditor;
+
 class ProductForm
 {
     public static function getProductCreateForm(): array
@@ -36,7 +36,7 @@ class ProductForm
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(Product::class, 'slug', ignoreRecord: true),
-                                    GptTrixEditor::make('content')->columnSpan('full'),
+
                                 Forms\Components\RichEditor::make('description')
                                     ->required()
                                     ->fileAttachmentsDirectory('attachments')
