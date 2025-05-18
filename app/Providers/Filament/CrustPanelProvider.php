@@ -30,19 +30,23 @@ class CrustPanelProvider extends PanelProvider
             ->font('Poppins')
 
             ->brandName('Prarang')
-            // ->brandLogo(asset('crust-app/logo/crust-light.png'))
-            // ->favicon(asset('crust-app/logo/crust-dark.png'))
-            // ->brandLogoHeight('4rem')
+            ->brandLogo(asset('crust-app/logo/crust-light.png'))
+            ->favicon(asset('crust-app/logo/mava-icon.webp'))
+            ->brandLogoHeight('3rem')
 
             ->login()
             ->profile()
 
             ->spa()
-            ->unsavedChangesAlerts()
+            // ->unsavedChangesAlerts()
 
             ->colors([
                 'primary' => Color::hex('#9E2088'),
-                'secondary' => Color::hex('#9E2088'),
+                'secondary' => Color::hex('#F1C40F'),
+                'tertiary' => Color::hex('#F4F5F9'),
+                'success' => Color::hex('#2ECC71'),
+                'warning' => Color::hex('#F1C40F'),
+                'danger' => Color::hex('#E33A3A'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')

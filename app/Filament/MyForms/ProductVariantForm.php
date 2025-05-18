@@ -2,10 +2,8 @@
 
 namespace App\Filament\MyForms;
 
-
 use App\Models\ProductVariant;
 use Filament\Forms;
-use Filament\Forms\Form;
 
 class ProductVariantForm
 {
@@ -27,8 +25,7 @@ class ProductVariantForm
                                 ->label('Price')
                                 ->numeric()
                                 ->required()
-                                ->prefix('₹')
-                                ->maxLength(255),
+                                ->prefix('₹'),
 
                             Forms\Components\TextInput::make('quantity')
                                 ->label('Stock Quantity')
@@ -47,32 +44,62 @@ class ProductVariantForm
                         ->columnSpan(1),
                     Forms\Components\Repeater::make('attributes')
                         ->label('Variant Attributes')
+                        ->relationship('attributes')
                         ->schema([
-                            Forms\Components\TextInput::make('key')
-                                ->label('Attribute Key')
-                                ->required(),
+                            Forms\Components\Select::make('key')
+                                ->label('Variant Type')
+                                ->options([
+                                    'size' => 'Size',
+                                    'color' => 'Color',
+                                    'material' => 'Material',
+                                    'pack' => 'Pack',
+                                    'weight' => 'Weight',
+                                    'volume' => 'Volume',
+                                ])
+
+                                ->searchable()
+                                ->required()
+                                ->reactive()
+                                ->afterStateUpdated(function (callable $set, $state) {
+                                    if ($state === 'color') {
+                                        $set('value', '');
+                                    }
+                                }),
                             Forms\Components\TextInput::make('value')
+                                ->label('Variant Value')
+                                ->required()
+                                ->hidden(fn ($get) => $get('key') === 'color'),
+                            Forms\Components\ColorPicker::make('value')
                                 ->label('Attribute Value')
-                                ->required(),
+                                ->required()
+                                ->hidden(fn ($get) => $get('key') !== 'color'),
                         ])
                         ->columns(2)
-                        ->minItems(1)
+                        // ->minItems(1)
                         ->addActionLabel('Add Attribute')
-                        ->reorderable()
+                        // ->reorderable()
                         ->collapsible()
-                        ->columnSpan(1)
+                        ->columnSpan(1),
 
                 ]),
             Forms\Components\Repeater::make('images')
                 ->label('Variant Images')
+                ->relationship('images')
+                ->grid(2)
                 ->schema([
                     Forms\Components\FileUpload::make('image_url')
-                        ->label('Image')
-
                         ->image()
-                        ->required()
+                        ->imageEditor()
+                        ->imageEditorMode(2)
+                        ->imageResizeMode('cover')
+                        ->imageCropAspectRatio('4:5')
+                        ->directory('products')
+                        ->visibility('private')
+                        ->previewable(true),
+
                 ])
-                ->minItems(1)
+                // ->minItems(1)
+                ->defaultItems(2)
                 ->addActionLabel('Add Image')
                 ->reorderable()
                 ->collapsible()

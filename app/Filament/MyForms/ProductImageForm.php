@@ -13,7 +13,7 @@ class ProductImageForm
         return [
 
             Forms\Components\FileUpload::make('image_url')
-                ->label('Product Main Image')
+                // ->label('Product Main Image')
                 ->image()
                 ->imageEditor()
                 ->imageEditorMode(2)
@@ -25,7 +25,8 @@ class ProductImageForm
                 ->previewable(true)
                 ->required()->columnSpanFull(),
             Forms\Components\Toggle::make('is_primary')
-                ->label('Primary Image'),
+                ->label('Primary Image')
+                ->inline(false),
 
         ];
     }

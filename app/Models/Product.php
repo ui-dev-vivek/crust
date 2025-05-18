@@ -68,6 +68,6 @@ class Product extends Model
 
     public function primaryImage()
     {
-        return $this->hasOne(ProductImage::class)->where('is_primary', 1);
+        return $this->hasOne(ProductImage::class)->where('is_primary', 1)->latest();
     }
 }

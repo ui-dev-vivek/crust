@@ -13,7 +13,14 @@ class ListProducts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()->label('Create New Product')
+                ->icon('heroicon-o-plus')
+                ->color('primary')
+                ->iconPosition('after')
+                ->button()
+                ->size('lg')
+                ->modalHeading('Create New Product'),
+
         ];
     }
 }
