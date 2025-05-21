@@ -11,10 +11,11 @@ class Listing extends Component
     public $products;
     public function mount()
     {
-        $this->products = Product::with(['primaryImage'])
+        $this->products = Product::with(['primaryImage','baseVarient','discounts'])
         ->where('status', 1)
         ->orderBy('id', 'asc')
         ->get();
+        // dd($this->products);
 
     }
     public function addToCart($product)
