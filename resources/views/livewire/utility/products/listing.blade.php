@@ -16,7 +16,8 @@
                                 <img src="{{ Storage::url(optional($product->primaryImage)->image_url ?? 'default-product.jpg') }}" alt="{{ $product->name }}">
 
                                 <span class="product-title">{{ $product->name }}</span>
-                                <p class="sale-price">${{ $product->price ?? '0.00' }}<span class="real-price">${{ $product->price ?? '0.00' }}</span></p>
+
+                                @livewire('utility.products.dis-view', ['price' => $product->baseVarient->price, 'discount' => $product->discounts,'style'=>[]])
                                 <div class="product-rating">
                                     {{-- Optional Rating Display --}}
                                 </div>

@@ -58,7 +58,7 @@ class Product extends Model
 
     public function discounts()
     {
-        return $this->hasMany(ProductDiscount::class);
+        return $this->hasOne(ProductDiscount::class);
     }
 
     public function related()
@@ -69,5 +69,9 @@ class Product extends Model
     public function primaryImage()
     {
         return $this->hasOne(ProductImage::class)->where('is_primary', 1)->latest();
+    }
+    public function baseVarient()
+    {
+        return $this->hasOne(ProductVariant::class)->where('is_base', 1)->latest();
     }
 }
