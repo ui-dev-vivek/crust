@@ -35,6 +35,10 @@ class Product extends Model
     {
         return $this->hasOne(ProductBadge::class);
     }
+    public function badge($type)
+    {
+        return $this->badges()->where($type, 1)->latest()->first();
+    }
 
     public function variants()
     {

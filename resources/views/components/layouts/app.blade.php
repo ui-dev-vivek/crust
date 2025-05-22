@@ -101,7 +101,7 @@
     <!-- Internet Connection Status-->
     <div class="mb-4 internet-connection-status" id="internetStatus"></div>
     {{-- <a href=""><div class="internet-connection-status bg-success" id="cartstatus">3 items in cart &nbsp;&nbsp;<i class='bx bx-arrow-back bx-flip-horizontal bx-flashing' ></i></div></a> --}}
-    <!-- Footer Nav-->
+    <!-- Footer Nav-->2
     <div class="footer-nav-area" id="footerNav">
         <div class="suha-footer-nav">
             {{-- max 6 --}}

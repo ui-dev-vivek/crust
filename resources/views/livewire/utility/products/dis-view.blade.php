@@ -1,3 +1,9 @@
 <div>
-    <p class="sale-price">₹{{ $finalPrice ?? $price }}<span class="real-price">₹{{ $price ?? '0.00' }}</span></p>
+    @if ($finalPrice== $price)
+        <p class="sale-price">₹{{ number_format($finalPrice, 0, '.', '') }}</p>
+
+   @else
+    <p class="sale-price">₹{{ number_format($finalPrice, 0, '.', '') }}<span class="real-price">₹{{ number_format($price, 0, '.', '') }}</span></p>
+    @endif
 </div>
+

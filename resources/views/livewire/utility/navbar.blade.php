@@ -12,7 +12,7 @@
                         <div><span></span><span></span><span></span></div>
                     </div>
                     @else
-                    <div class="user-profile-icon ms-2"><a href="profile.html"><img src="{{asset('assets/img/bg-img/9.jpg')}}" alt=""></a></div>
+                    <div class="user-profile-icon ms-2"><a href=""><img src="{{asset('assets/img/bg-img/9.jpg')}}" alt=""></a></div>
                     @endauth
                     <div class="suha-navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#MavaOffcanvas" aria-controls="suhaOffcanvas">
                         <div><span></span><span></span><span></span></div>

@@ -7,19 +7,41 @@ use Livewire\Component;
 
 class Listing extends Component
 {
+    public $featuredProducts;
 
-    public $products;
+    public $newProducts;
+
+    public $style = [];
+
     public function mount()
     {
-        $this->products = Product::with(['primaryImage','baseVarient','discounts'])
-        ->where('status', 1)
-        ->orderBy('id', 'asc')
-        ->get();
-        // dd($this->products);
+        $this->featuredProducts = Product::with(['primaryImage', 'baseVarient', 'discounts', 'badges'])
+            ->where('status', 1)
+            ->whereHas('badges', function ($query) {
+                $query->where('is_featured', 1);
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+        $this->newProducts = Product::with(['primaryImage', 'baseVarient', 'discounts', 'badges'])
+            ->where('status', 1)
+            ->whereHas('badges', function ($query) {
+                $query->where('is_new', 1);
+            })
+            ->orderBy('id', 'asc')
+            ->get();
 
     }
+
+    public function viewAll()
+    {
+        dd(75);
+    }
+
     public function addToCart($product)
     {
+        dd(76);
+        sleep(3);
+
         // Logic to add the product to the cart
         session()->flash('message', "{$product['name']} has been added to your cart.");
     }

@@ -1,32 +1,51 @@
-<div>
-    <div class="flash-sale-wrapper">
-        <div class="container">
-            <div class="section-heading d-flex align-items-center justify-content-between rtl-flex-d-row-r">
-                <h6 class="d-flex align-items-center rtl-flex-d-row-r">
-                    <i class="fa-solid fa-bolt-lightning me-1 text-danger lni-flashing-effect"></i>Offer Sale
-                </h6>
-            </div>
+<div class="py-3 top-products-area">
+    <div class="container">
+        <div class="section-heading d-flex align-items-center justify-content-between dir-rtl">
+            <h6>Top Products</h6>
+            <a class="p-0 btn" href="javascript:void(0);" wire:click="viewAll">View All<i class="ms-1 fa-solid fa-arrow-right-long"></i></a>
+        </div>
 
-            <!-- Flash Sale Slide -->
-            <div class="flash-sale-slide owl-carousel">
-                @foreach ($products as $product)
-                    <div class="card flash-sale-card">
+        <div class="row g-2">
+            @foreach ($newProducts as $product)
+                <div class="col-6 col-md-4">
+                    <div class="card product-card">
                         <div class="card-body">
-                            <a href="">
-                                <img src="{{ Storage::url(optional($product->primaryImage)->image_url ?? 'default-product.jpg') }}" alt="{{ $product->name }}">
+                            <!-- Badge -->
+                            <span class="badge rounded-pill badge-warning">Sale</span>
 
-                                <span class="product-title">{{ $product->name }}</span>
+                            <!-- Wishlist Button -->
+                            <a class="wishlist-btn" href="#"><i class="fa-solid fa-heart"></i></a>
 
-                                @livewire('utility.products.dis-view', ['price' => $product->baseVarient->price, 'discount' => $product->discounts,'style'=>[]])
-                                <div class="product-rating">
-                                    {{-- Optional Rating Display --}}
-                                </div>
+                            <!-- Thumbnail -->
+                            <a class="product-thumbnail d-block" href="">
+                                <img class="mb-2" src="{{ Storage::url(optional($product->primaryImage)->image_url ?? 'default-product.jpg') }}" alt="{{ $product->name }}">
+
+
+                                {{-- <ul class="shadow-sm offer-countdown-timer d-flex align-items-center" data-countdown="2025/12/31 23:59:59">
+                                    <li><span class="days">00</span>d</li>
+                                    <li><span class="hours">00</span>h</li>
+                                    <li><span class="minutes">00</span>m</li>
+                                    <li><span class="seconds">00</span>s</li>
+                                </ul> --}}
                             </a>
-                            <button wire:click="addToCart({{ $product->id }})" class="mt-2 btn btn-sm btn-primary w-100">Add to Cart</button>
+
+                            <!-- Product Title -->
+                            <a class="product-title" href="">{{ $product->name }}</a>
+
+                            <!-- Product Price with Livewire Discount View -->
+                            @livewire('utility.products.dis-view', ['price' => $product->baseVarient->price, 'discount' => $product->discounts, 'style'=>[]])
+
+                            <!-- Rating -->
+                            <div class="product-rating">
+                                {{-- Optional Ratings --}}
+                            </div>
+
+                            <!-- Add to Cart Button -->
+                            @livewire('utility.cart.global-cart-button', ['productId' => $product->id])
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
