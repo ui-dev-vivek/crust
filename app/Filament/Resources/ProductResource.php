@@ -43,24 +43,24 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->recordUrl(fn ($record) => static::getUrl('view', ['record' => $record]))
+            ->recordUrl(fn($record) => static::getUrl('view', ['record' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable()
                     ->label('Product Name')
                     ->limit(30)
-                    ->tooltip(fn (Product $record): string => $record->name),
+                    ->tooltip(fn(Product $record): string => $record->name),
                 // Tables\Columns\TextColumn::make('slug')->wrap(),
                 Tables\Columns\ImageColumn::make('primaryImage.image_url')
                     ->label('Image'),
                 Tables\Columns\TextColumn::make('total_stock')
                     ->label('Total Stock')
-                    ->getStateUsing(fn (Product $record) => $record->variants->sum('quantity'))
+                    ->getStateUsing(fn(Product $record) => $record->variants->sum('quantity'))
                     ->sortable()
                     ->badge()
-                    ->color(fn ($state) => $state > 0 ? 'success' : 'danger')
+                    ->color(fn($state) => $state > 0 ? 'success' : 'danger')
                     ->tooltip(function (Product $record) {
                         return $record->variants
-                            ->map(fn ($variant) => ($variant->sku ?? '').': '.$variant->quantity)
+                            ->map(fn($variant) => ($variant->sku ?? '') . ': ' . $variant->quantity)
                             ->implode('] ['); // new line between each variant
                     }),
 
@@ -96,118 +96,146 @@ class ProductResource extends Resource
 
     public static function infolist(Infolist $infolist): Infolist
     {
-        return $infolist
-            ->schema([
+        return $infolist->schema([
 
-                Grid::make(12)->schema([
-                    Section::make('Product Images')
+            // Main Grid Layout
+            Grid::make(12)->schema([
+
+                // Left Side - Product Details
+                Section::make('Product Details')
+                    ->description('Details about the product including name, slug, images, and description.')
                     ->schema([
+                        TextEntry::make('name')
+                            ->label('Product Name')
+                            ->columnSpanFull()
+                            ->inlineLabel(),
+
+                        TextEntry::make('slug')
+                            ->label('Slug')
+                            ->columnSpanFull()
+                            ->inlineLabel(),
+
                         RepeatableEntry::make('images')
-                            ->label('Images')
+                            ->label('Product Images')
                             ->grid(2)
-
-
                             ->schema([
-
-                                    ImageEntry::make('image_url')
-                                        ->label('Image')
-
-->width('100%')
-->height('100%')                                        ->columnSpan(12),
-
-                                    // TextEntry::make('is_primary')
-                                    //     ->label('Primary')
-                                    //     ->formatStateUsing(fn ($state) => $state ? 'Yes' : 'No')
-                                    //     ->columnSpan(2),
-
+                                ImageEntry::make('image_url')
+                                    ->label('Image')
+                                    ->width('100%')
+                                    ->height('100%')
+                                    ->columnSpan(12),
                             ])
-                            ->columns(1), // each repeatable row
+                            ->columns(1),
+
                     ])
                     ->columnSpan(8),
-                    Section::make([
+
+                // Right Side - Metadata & Status
+                Section::make('Metadata')
+                    ->description('Product status and categorization.')
+                    ->schema([
                         Grid::make(12)->schema([
                             TextEntry::make('status')
-                                ->label('Active')
-                                ->formatStateUsing(fn ($state) => $state ? 'Published' : 'Unpublished')
-                                ->icon(fn (string $state): string => match ($state) {
-                                    '1' => 'heroicon-o-check-circle',
-                                    '0' => 'heroicon-o-x-circle',
-
-                                })
-                                ->color(fn (string $state): string => match ($state) {
-                                    '1' => 'success',
-                                    '0' => 'danger',
-
-                                })
+                                ->label('Status')
+                                ->formatStateUsing(fn($state) => $state ? 'Published' : 'Unpublished')
+                                ->icon(fn($state) => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                                ->color(fn($state) => $state ? 'success' : 'danger')
                                 ->badge()
                                 ->iconPosition('after')
                                 ->columnSpan(6),
 
                             TextEntry::make('category.name')
-                                ->label('Category')->columnSpan(6),
+                                ->label('Category')
+                                ->columnSpan(6),
+
                             TextEntry::make('type.name')
-                                ->label('Type')->columnSpan(4),
-                            TextEntry::make('group.name')->columnSpan(8)
-                                ->label('Group'),
+                                ->label('Type')
+                                ->columnSpan(6),
+
+                            TextEntry::make('group.name')
+                                ->label('Group')
+                                ->columnSpan(6),
 
                             TextEntry::make('created_at')
                                 ->label('Uploaded At')
-                                ->formatStateUsing(fn ($state) => $state->format('d M Y'))
-                                ->dateTime()->columnSpan(6),
+                                ->formatStateUsing(fn($state) => $state?->format('d M Y'))
+                                ->columnSpan(6),
 
                             TextEntry::make('updated_at')
-                                ->label('Last Updated At')
-                                ->formatStateUsing(fn ($state) => $state->format('d M Y'))
-                                ->dateTime()->columnSpan(6),
-
-                            // ye text entry hai
-
+                                ->label('Last Updated')
+                                ->formatStateUsing(fn($state) => $state?->format('d M Y'))
+                                ->columnSpan(6),
                         ]),
+                    ])
+                    ->columnSpan(4),
+            ]),
 
-                    ])->columnSpan(4),
+            // Variants Section
+            Section::make('Product Variants')
+                ->description('Each variant with SKU, price, quantity, base status, attributes, and images.')
+                ->schema([
+                    RepeatableEntry::make('variants')
+                        ->label('Variants')
+                        ->schema([
+                            Grid::make(4)->schema([
+                                TextEntry::make('sku')->label('SKU'),
+                                TextEntry::make('price')->label('Price')->money('INR'),
+                                TextEntry::make('quantity')->label('Quantity'),
+                                TextEntry::make('is_base')
+                                    ->label('Base Variant')
+                                    ->formatStateUsing(fn($state) => $state ? 'Yes' : 'No')
+                                    ->badge()
+                                    ->color(fn($state) => $state ? 'success' : 'gray'),
+                            ]),
 
+                            // Attributes Block
+                            RepeatableEntry::make('attributes')
+                                ->label('Attributes')
+                                ->grid(4)
+                                ->schema([
+                                    Grid::make(2)->schema([
+                                        TextEntry::make('key')->label(''),
+                                        TextEntry::make('value')->label(''),
+                                    ]),
+                                ])
+                                // ->columns(1)
+                                ->columnSpanFull(),
+
+                            // Variant Images Block
+                            RepeatableEntry::make('images')
+                                ->label('Images')
+                                ->schema([
+                                    ImageEntry::make('image_url')->label('Image')->columnSpanFull(),
+                                ])
+                                ->columns(2)
+                                ->grid(3)
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(1),
                 ]),
 
-                TextEntry::make('name')
-                    ->label('Product Name')
-                    ->columnSpanFull(),
-
-                TextEntry::make('description')
-                    ->label('Description')
-                    ->columnSpanFull(),
-
-
-                RepeatableEntry::make('productVariants')
-                    ->label('Variants')
-                    ->schema([
-                        TextEntry::make('sku')
-                            ->label('SKU'),
-
-                        TextEntry::make('price')
-                            ->label('Price')
-                            ->money('INR'),
-
-                        TextEntry::make('quantity')
-                            ->label('Quantity'),
-
-                        TextEntry::make('is_base')
-                            ->label('Base Variant'),
-                    ])
-                    ->columns(4),
-
-                RepeatableEntry::make('productImages')
-                    ->label('Images')
-                    ->schema([
-                        ImageEntry::make('image_url')
-                            ->label('Image'),
-
-                        TextEntry::make('is_primary')
-                            ->label('Primary'),
-                    ])
-                    ->columns(2),
-            ]);
-
+            // Extra Images Section
+            Section::make('Additional Images')
+                ->description('More product images with primary indicator.')
+                ->schema([
+                    RepeatableEntry::make('images')
+                        ->schema([
+                            ImageEntry::make('image_url')->label('Image'),
+                            TextEntry::make('is_primary')->label('Primary'),
+                        ])
+                        ->columns(2),
+                ]),
+            Section::make('Description')
+                ->description('Product description and details.')
+                ->schema([
+                    TextEntry::make('description')
+                        ->label('Description')
+                        ->html()
+                        ->columnSpanFull(),
+                ]),
+        ]);
     }
+
 
     public static function getRelations(): array
     {
