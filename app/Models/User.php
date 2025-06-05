@@ -84,8 +84,5 @@ class User extends Authenticatable
         return $this->hasMany(ProductReview::class);
     }
 
-    // public function canAccessPanel(Panel $panel): bool
-    // {
-    //     return str_ends_with($this->email, '@crust.com') && $this->hasVerifiedEmail();
-    // }
+
 }

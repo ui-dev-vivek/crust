@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('role',['admin','sales','accountant','product','marketing'])->default('admin');
             $table->timestamps();
         });
-        Schema::table('admin_logins', function (Blueprint $table) {
+        Schema::create('admin_logins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->string('ip_address')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
+    { Schema::dropIfExists('admin_logins');
         Schema::dropIfExists('admins');
     }
 };

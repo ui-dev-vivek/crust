@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers\Filament;
-
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -20,6 +20,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class CrustPanelProvider extends PanelProvider
 {
+
     public function panel(Panel $panel): Panel
     {
 
@@ -28,7 +29,7 @@ class CrustPanelProvider extends PanelProvider
             ->id('crust')
             ->path('crust')
             ->font('Poppins')
-
+            ->authGuard('admin')
             ->brandName('Prarang')
             ->brandLogo(asset('crust-app/logo/crust-light.png'))
             ->favicon(asset('crust-app/logo/mava-icon.webp'))

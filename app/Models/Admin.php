@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements FilamentUser
 {
     use HasFactory;
     protected $guard = 'admin';
@@ -24,24 +25,13 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
-    // public function canAccessFilament(): bool
-    // {
-    //     return true;
-    // }
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@crust.com') && $this->role=='admin';
+    }
 
     public function filamentName(): string
     {
         return $this->name;
     }
-
-    public function filamentAvatarUrl(): string
-    {
-        return '';
-    }
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
-
 }
