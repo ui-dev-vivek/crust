@@ -13,7 +13,10 @@ return [
     | This will allow your users to receive real-time notifications.
     |
     */
-
+    'auth' => [
+        'guard' => 'admin',
+        // Optionally customize login route or logic
+    ],
     'broadcasting' => [
 
         // 'echo' => [

@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Pages\Main\Home;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/',Home::class)->name('home');
 

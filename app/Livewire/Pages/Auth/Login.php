@@ -125,6 +125,7 @@ class Login extends Component
         }
 
         Auth::login($user);
+
         session()->flash('message', 'Logged in successfully');
         return redirect()->intended('/dashboard');
     }

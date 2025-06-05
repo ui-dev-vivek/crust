@@ -54,6 +54,17 @@
  word-spacing:1.2px;
 }
 
+/* Import Google Fonts */
+@import url("//fonts.googleapis.com/css2?family=Hepta+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+/* Paragraph */
+.login-wrapper p{
+ color:#39a90d;
+ font-size:16px;
+ font-weight:600;
+ font-family:'Hepta Slab', serif;
+}
+
 
     </style>
 
