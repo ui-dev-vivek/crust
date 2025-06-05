@@ -5618,3 +5618,36 @@ div .login-wrapper .container .row .col-lg-8 img{
     border-bottom-left-radius:50%;
     border-bottom-right-radius:50%;
    }
+/* Offcanva cart */
+#cartOffcanvas .offcanvas-body .offcanva-cart{
+  min-height:80vh;
+  /* overflow-y:scroll; */
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+ }
+
+/* Image */
+.logo-wrapper a img{
+  border-style:none;
+  display:inline-block;
+  transform:translatex(0px) translatey(0px) !important;
+  background-color:#0f0f0f;
+  border-top-left-radius:0%;
+  border-top-right-radius:0%;
+  border-bottom-left-radius:0%;
+  border-bottom-right-radius:0%;
+  margin-left:4px;
+ }
+
+ /* Image */
+ div #headerArea .d-flex .logo-wrapper a img{
+  width:150% !important;
+ }
+/* Image */
+.logo-wrapper a img{
+    background-color:rgba(15,15,15,0);
+   }
+
+

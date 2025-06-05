@@ -3,9 +3,9 @@
         @case('home')
         <div class="header-area" id="headerArea">
             <div class="container h-100 d-flex align-items-center justify-content-between rtl-flex-d-row-r">
-                <div class="logo-wrapper"><a href="/"><img src="{{asset('assets/img/core-img/logo-white.png')}}" alt=""></a></div>
+                <div class="logo-wrapper"><a href="/"><img src="{{asset('assets/logos/logo-dark.png')}}" alt=""></a></div>
                 <div class="navbar-logo-container d-flex align-items-center">
-                    <div class="cart-icon-wrap"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i><span>2</span></a></div>
+                    @livewire('utility.cart.global-cart')
                     @auth
                     <div class="user-profile-icon ms-2"><a href="profile.html"><img src="assets/img/bg-assets/9.jpg" alt=""></a></div>
                     <div class="suha-navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#MavaOffcanvas" aria-controls="MavaOffcanvas">

@@ -37,14 +37,10 @@ class Listing extends Component
         dd(75);
     }
 
-    public function addToCart($product)
-    {
-        dd(76);
-        sleep(3);
-
-        // Logic to add the product to the cart
-        session()->flash('message', "{$product['name']} has been added to your cart.");
-    }
+    // public function addToCart($productId,$quantity)
+    // {
+    //     quantity
+    // }
 
     public function render()
     {

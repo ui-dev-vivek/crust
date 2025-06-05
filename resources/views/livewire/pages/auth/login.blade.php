@@ -65,6 +65,23 @@
  font-family:'Hepta Slab', serif;
 }
 
+/* Image */
+div div .login-wrapper .container .row .col-lg-8 img{
+ width:73% !important;
+ height:21% !important;
+}
+
+/* Image */
+.login-wrapper img{
+ display:inline-block;
+ transform:translatex(0px) translatey(0px) !important;
+}
+
+/* Login wrapper */
+div div .login-wrapper{
+ transform:translatex(0px) translatey(0px);
+}
+
 
     </style>
 
@@ -75,7 +92,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-10 col-lg-8">
-                        <img class=" big-logo" src="assets/img/core-img/logo-white.png" alt="">
+                        <img class=" big-logo" src="{{asset('assets/logos/logo-dark.png')}}" alt="">
                         <h6 class=" text-dark">Sign Up to get started</h6>
                         <!-- Login/Register Form -->
                         <br>

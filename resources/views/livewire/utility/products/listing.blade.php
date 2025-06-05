@@ -34,14 +34,12 @@
 
                             <!-- Product Price with Livewire Discount View -->
                             @livewire('utility.products.dis-view', ['price' => $product->baseVarient->price, 'discount' => $product->discounts, 'style'=>[]])
+                            {{-- <button wire:click="$dispatch('addToCart' { postId: 1 })">+</button> --}}
+                            <button wire:click="$dispatch('addToCart', { variantId: {{ $product->baseVarient->id }}, quantity: 1 })">+</button>
 
-                            <!-- Rating -->
+
                             <div class="product-rating">
-                                {{-- Optional Ratings --}}
                             </div>
-
-                            <!-- Add to Cart Button -->
-                            @livewire('utility.cart.global-cart-button', ['productId' => $product->id])
                         </div>
                     </div>
                 </div>
